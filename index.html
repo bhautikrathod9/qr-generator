@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <h2>QR Code Generator</h2>
+            <input type="text" id="qrText" placeholder="Enter text or URL">
+            <button onclick="generateQR()">Generate QR Code</button>
+            <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+            <div id="qrContainer">
+                <img id="qrImage" style="display:none;" alt="QR Code">
+                <a id="downloadLink" style="display: none;">
+                    <button class="download-btn">Download QR image</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateQR() {
+            let qrText = document.getElementById("qrText").value;
+            if (qrText.trim() === "") {
+                alert("Please enter text or a URL");
+                return;
+            }
+            let qrImage = document.getElementById("qrImage");
+            let downloadLink = document.getElementById('downloadLink');
+
+            let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrText)}`;
+
+            qrImage.src = qrUrl;
+            qrImage.style.display = "block";
+
+            downloadLink.href = qrUrl;
+            downloadLink.download = "QRCode.png";
+            downloadLink.style.display = "block";
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
+</body>
+</html>
